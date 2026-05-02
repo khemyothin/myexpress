@@ -10,28 +10,36 @@ const config = {
   channelSecret: '6cad106330224b572c54545c677012c9'
 };
 
-app.use('/callback', line.middleware(config));
+app.use('/webhook', line.middleware(config));
 
-// รับ webhook
-app.post('/callback', (req, res) => {
+//รับขWebhook
+app.post('/webhook', (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
     .then(result => res.json(result));
 });
 
 // ตอบกลับข้อความ
+const client = new line.messagingApi.MessagingApiClient({
+  channelAccessToken: config.channelAccessToken
+});
+
 function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null);
   }
 
-  return client.replyMessage(event.replyToken, {
-    type: 'text',
-    text: `คุณพิมพ์ว่า: ${event.message.text}`
+  return client.replyMessage({
+    replyToken: event.replyToken,
+    messages: [
+      {
+        type: 'text',
+        text: `คุณพิมพ์ว่า: ${event.message.text}`
+      }
+    ]
   });
 }
 
-const client = new line.messagingApi.MessagingApiClient(config);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
