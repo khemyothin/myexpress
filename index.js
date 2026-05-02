@@ -10,10 +10,6 @@ const config = {
   channelSecret: '6cad106330224b572c54545c677012c9'
 };
 
-app.get('/', (req, res) => {
-  res.send('Server is running!');
-});
-
 app.use('/callback', line.middleware(config));
 
 // รับ webhook
