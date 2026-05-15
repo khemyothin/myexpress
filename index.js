@@ -19,7 +19,7 @@ const client = line.LineBotClient.fromChannelAccessToken({
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('hello world, khem');
+  res.send('hello world, khemyothin Sethongseau');
 });
 
 
