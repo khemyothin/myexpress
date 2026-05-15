@@ -1,4 +1,5 @@
 // index.js
+require('dotenv').config();
 const express = require('express');
 const line = require('@line/bot-sdk');
 
@@ -6,11 +7,18 @@ const app = express();
 
 // ตั้งค่าจาก LINE Developers Console
 const config = {
-  channelAccessToken: 'Sj+hmLvTE/m8lpUUYcsQzE6Ew8pq2zvBQtridxZPpG2dsNYptt7pf7HjfBOkPPQ07W7WWlxqLSwjTFS6DRdLYZBKqUBho76TPWbQ22LCUuqaxcQnlRYsHa5fIJXqc8UJ0GsBMBBuDazRID284zEvkQdB04t89/1O/w1cDnyilFU=',
-  channelSecret: '6cad106330224b572c54545c677012c9'
+  channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN || "",
+  channelSecret: process.env.LINE_CHANNEL_SECRET || ""
 };
 
+
 app.use('/webhook', line.middleware(config));
+
+//get
+app.get('/', (req, res) => {
+  res.send('hello world, khemyothin');
+});
+
 
 //รับขWebhook
 app.post('/webhook', (req, res) => {
