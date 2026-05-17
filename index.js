@@ -34,7 +34,7 @@ const ai = new GoogleGenAI({
 
 // get method
 app.get('/', (req, res) => {
-  res.send('hello world, khemyothin Sethongseau');
+  res.send('hello world, khemyothin Sethongseau1');
 });
 
 
